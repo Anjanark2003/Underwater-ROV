@@ -1,0 +1,111 @@
+#include <Servo.h>
+Servo bldcL; // create servo object to control a servo
+Servo bldcR;
+Servo bldcT1;
+Servo bldcT2;
+int speed=1200;
+int dive_speed=1000;
+int potpinL= A1; // analog pin used to connect the potentiometer
+int potpinR = A2;
+int valL; // variable to read the value from the analog pin
+int valR;
+int j1,j2,j3,j4;
+void setup() {
+Serial.begin(9600);
+bldcL.attach(12); // attaches the servo on pin 9 to the servo object
+bldcR.attach(11);
+bldcT1.attach(10);
+bldcT2.attach(9);
+bldcL.writeMicroseconds(1000);
+bldcR.writeMicroseconds(1000);
+bldcT1.writeMicroseconds(1000);
+bldcT2.writeMicroseconds(1000);
+}
+void loop() {
+j1=analogRead(A0);
+j2=analogRead(A1);
+j3=analogRead(A2);
+j4=analogRead(A3);
+Serial.print(j1);
+Serial.print(" : ");
+Serial.print(j2);
+Serial.print(" : ");
+Serial.print(j3);
+Serial.print(" : ");
+Serial.print(j4);
+Serial.println(" : ");
+if(j1<500)
+{
+left();
+delay(100);
+}
+if(j1>600)
+vii
+{
+right();
+delay(100);
+}
+if(j2<500)
+{
+delay(100);
+}
+if(j2>600)
+{
+forward();
+delay(100);
+}
+if(j1>500 && j1 <600 && j2>500 && j2<600){
+stop_dir();
+delay(100);
+}
+if(j3>600)
+{
+dive();
+delay(100);
+}
+if(j3<500)
+{
+ascent();
+delay(100);
+}
+speed=constrain(speed, 1000, 1700);
+dive_speed=constrain(dive_speed, 1000, 1700);
+}//loop end
+void forward()
+{
+bldcR.writeMicroseconds(speed);
+bldcL.writeMicroseconds(speed);
+speed+=10;
+}
+void down()
+{
+viii
+}
+void left()
+{
+bldcL.writeMicroseconds(speed);
+speed+=10;
+}
+void right()
+{
+bldcR.writeMicroseconds(speed);
+speed+=10;
+}
+void stop_dir()
+{
+speed=1000;
+bldcR.writeMicroseconds(speed);
+bldcL.writeMicroseconds(speed);
+}
+void dive()
+{
+bldcT1.writeMicroseconds(dive_speed);
+bldcT2.writeMicroseconds(dive_speed);
+dive_speed+=5;
+}
+void ascent()
+{
+dive_speed=1000;
+bldcT1.writeMicroseconds(dive_speed);
+bldcT2.writeMicroseconds(dive_speed);
+}
